@@ -3,6 +3,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
+import 'package:tddcleanarch_project_training/domains/helpers/helpers.dart';
 import 'package:tddcleanarch_project_training/domains/usecases/authentication.dart';
 
 import 'package:tddcleanarch_project_training/data/usecases/usecases.dart';
@@ -37,16 +38,19 @@ void main() {
   });
 
   test('Should throw unexpected error if HttpClient returns 400', () async {
+    when(httpClient.request(
+            url: anyNamed("url"),
+            method: anyNamed("method"),
+            body: anyNamed("body")))
+        .thenThrow(HttpError.badRequest);
+
     final params = AuthenticationParams(
       email: faker.internet.email(),
       secret: faker.internet.password(),
     );
 
-    await sut.auth(params);
+    final future = sut.auth(params);
 
-    verify(httpClient.request(
-        url: url,
-        method: 'post',
-        body: {'email': params.email, 'password': params.secret}));
+    expect(future, throwsA(DomainError.unexpected));
   });
 }
