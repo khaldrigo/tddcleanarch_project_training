@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../domains/usecases/authentication.dart';
 
 import '../http/http.dart';
@@ -7,11 +9,11 @@ class RemoteAuthentication {
   final String url;
 
   RemoteAuthentication({
-    required this.httpClient,
-    required this.url,
+    @required this.httpClient,
+    @required this.url,
   });
 
-  Future<void>? auth(AuthenticationParams params) async {
+  Future<void> auth(AuthenticationParams params) async {
     final body = RemoteAuthenticationParams.fromDomain(params).toJson();
     await httpClient.request(
       url: url,
@@ -26,8 +28,8 @@ class RemoteAuthenticationParams {
   final String password;
 
   RemoteAuthenticationParams({
-    required this.email,
-    required this.password,
+    @required this.email,
+    @required this.password,
   });
 
   factory RemoteAuthenticationParams.fromDomain(AuthenticationParams params) =>

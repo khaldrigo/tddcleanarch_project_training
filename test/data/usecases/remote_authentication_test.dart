@@ -12,9 +12,9 @@ class HttpClientSpy extends Mock implements HttpClient {}
 
 @GenerateMocks([HttpClient])
 void main() {
-  RemoteAuthentication? sut;
-  late HttpClientSpy httpClient;
-  late String url;
+  RemoteAuthentication sut;
+  HttpClientSpy httpClient;
+  String url;
 
   setUp(() {
     httpClient = HttpClientSpy();
@@ -22,13 +22,13 @@ void main() {
     sut = RemoteAuthentication(httpClient: httpClient, url: url);
   });
 
-  test('Should call HttpCliente with correct values', () async {
+  test('Should call HttpClient with correct values', () async {
     final params = AuthenticationParams(
       email: faker.internet.email(),
       secret: faker.internet.password(),
     );
 
-    await sut!.auth(params);
+    await sut.auth(params);
 
     verify(httpClient.request(
         url: url,
@@ -42,7 +42,7 @@ void main() {
       secret: faker.internet.password(),
     );
 
-    await sut!.auth(params);
+    await sut.auth(params);
 
     verify(httpClient.request(
         url: url,
