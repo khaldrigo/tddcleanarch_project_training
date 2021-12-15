@@ -32,6 +32,7 @@ dependencies:
   test:
   mockito:
   faker:
+  http:
   
 
   # The following adds the Cupertino Icons font to your application.
